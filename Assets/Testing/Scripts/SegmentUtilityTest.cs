@@ -1,7 +1,7 @@
 using UnityEngine;
 
 [ExecuteAlways]
-public class ValuesUtilitiesTest : MonoBehaviour
+public class SegmentUtilityTest : MonoBehaviour
 {
     [Header("Test Segments (int)")]
     public SegmentInt segment1;

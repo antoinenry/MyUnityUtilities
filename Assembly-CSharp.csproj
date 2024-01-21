@@ -56,13 +56,11 @@
     <Analyzer Include="C:\Program Files\Microsoft Visual Studio\2022\Community\Common7\IDE\Extensions\Microsoft\Visual Studio Tools for Unity\Analyzers\Microsoft.Unity.Analyzers.dll" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\Testing\Scripts\ValuesUtilitiesTest.cs" />
-    <Compile Include="Assets\Scripts\ValuesUtilities\RandomPick.cs" />
-    <Compile Include="Assets\Scripts\ValuesUtilities\ValueRange.cs" />
-    <Compile Include="Assets\Scripts\ValuesUtilities\SegmentOperations.cs" />
-    <Compile Include="Assets\Scripts\ValuesUtilities\ISegment.cs" />
-    <Compile Include="Assets\Scripts\ValuesUtilities\SegmentInt.cs" />
-    <Compile Include="Assets\Scripts\ValuesUtilities\SegmentFloat.cs" />
+    <Compile Include="Assets\Scripts\Segment\SegmentOperations.cs" />
+    <Compile Include="Assets\Scripts\Segment\SegmentInt.cs" />
+    <Compile Include="Assets\Testing\Scripts\SegmentUtilityTest.cs" />
+    <Compile Include="Assets\Scripts\Segment\SegmentFloat.cs" />
+    <Compile Include="Assets\Scripts\Segment\ISegment.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">
