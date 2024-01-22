@@ -7,5 +7,5 @@
 # Single Scriptable Object Utilities
 - A very small addition to its base class ScriptableObject
 - Adds a "Current" static reference and a "isCurrent" bool to instances
-- Toggle one instance as "isCurrent" automatically updates the static  "Current" and the other instances' "isCurrent"
-- Facilitates singleton-ish design: the class (abstract) allows multiple instances but ensures there's only one "Current"
+- Setting one instance's "isCurrent" to true automatically updates the static "Current" and the other instances' "isCurrent" to false
+- Facilitates singleton-ish design: the class (abstract) allows multiple instances but ensures there's only one "Current" (can also be null)
