@@ -1,38 +1,72 @@
+using System;
 using UnityEngine;
 
-// A small addition to ScriptableObject
-// Helps creating objects that allow only one instance to be active, kinda like a singleton.
-// When set to true, the "isCurrent" field will automatically be set to false in other instances.
-// The static reference to the Current instance must be implemented in the children classes with the following two lines.
-// Implementation example ---------------------------------------------
-//public class ExampleObject : SingleScriptableObject
-//{
-//    protected override ExampleObject CurrentObject { get => Current; set => Current = value as ExampleObject; }
-//    static public ExampleObject Current;
-//}
-// --------------------------------------------------------------------
-//
-// This might be made more efficient with Reflection but I'll keep it simple like this for now.
-
-public abstract class SingleScriptableObject : ScriptableObject
+[CreateAssetMenu(menuName = "SingleScriptable")]
+public class SingleScriptableObject : ScriptableObject
 {
-    [SerializeField] protected bool isCurrent;
-    protected abstract SingleScriptableObject CurrentObject { get; set; }
+    #region STATIC
+    static private SingleScriptableObject _current;
 
-    protected virtual void OnValidate() => SetCurrent();
-    protected virtual void OnEnable() => SetCurrent();
-    protected virtual void OnDisable() => SetCurrent();
-
-    private void SetCurrent()
-    {
-        if (isCurrent)
+    static public SingleScriptableObject Current 
+    { 
+        get
         {
-            if (CurrentObject != null && CurrentObject != this) CurrentObject.isCurrent = false;
-            CurrentObject = this;
+            if (_current == null) _current = FindCurrent();
+            return _current;
         }
-        else
+        set
         {
-            if (CurrentObject == this) CurrentObject = null;
+            ClearCurrent();
+            _current = value;
+            if (_current) _current.isCurrent = true;
         }
     }
+
+    static public SingleScriptableObject[] FindAll()
+    {
+        Resources.LoadAll("", typeof(SingleScriptableObject));
+        SingleScriptableObject[] all = Resources.FindObjectsOfTypeAll<SingleScriptableObject>();
+        Resources.UnloadUnusedAssets();
+        return all;
+    } 
+
+    static private SingleScriptableObject FindCurrent()
+    {
+        SingleScriptableObject[] all = FindAll();
+        if (all == null) return null;
+        SingleScriptableObject[] allCurrents = Array.FindAll(all, o => o.isCurrent);
+        if (allCurrents == null || allCurrents.Length == 0) return null;
+        if (allCurrents.Length > 1) Debug.LogWarning("Several current " + allCurrents[0].GetType() + " found.");
+        return allCurrents[0];
+    }
+
+    static private void ClearCurrent()
+    {
+        Debug.Log("ClearCurrent:");
+        SingleScriptableObject[] all = FindAll();
+        if (all == null || all.Length == 0) return;
+        foreach (SingleScriptableObject o in all)
+        {
+            Debug.Log(" - " + o);
+            o.isCurrent = false;
+        }
+        _current = null;
+    }
+    #endregion
+
+    #region INSTANCE
+    [SerializeField] [HideInInspector] private bool isCurrent;
+
+    public bool IsCurrent
+    {
+        get => isCurrent && _current == this;
+        set
+        {
+            if (value == true) Current = this;
+            else if (Current == this) Current = null;
+        }
+    }
+
+    public SingleScriptableObject GetCurrent() => Current;
+    #endregion
 }

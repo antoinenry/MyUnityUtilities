@@ -9,7 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bb28787cccd830c468cb1aabf429aa6e, type: 3}
-  m_Name: SingleScriptableObject 1
+  m_Script: {fileID: 11500000, guid: c3f2a00812088d54b82dfd4daf58079f, type: 3}
+  m_Name: SSO 2
   m_EditorClassIdentifier: 
-  isCurrent: 1
+  isCurrent: 0
