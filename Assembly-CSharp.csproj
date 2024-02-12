@@ -58,11 +58,15 @@
   <ItemGroup>
     <Compile Include="Assets\Scripts\Segment\SegmentOperations.cs" />
     <Compile Include="Assets\Scripts\SingleScriptableObject\SingleScriptableObject.cs" />
+    <Compile Include="Assets\Testing\TestScripts\CurrentManagerTest.cs" />
     <Compile Include="Assets\Scripts\Segment\SegmentInt.cs" />
     <Compile Include="Assets\Testing\TestScripts\SegmentUtilityTest.cs" />
+    <Compile Include="Assets\Testing\TestScripts\SingleScriptableObjectTest1.cs" />
+    <Compile Include="Assets\Scripts\SingleResourceManager\CurrentAssetsManager.cs" />
     <Compile Include="Assets\Scripts\Segment\SegmentFloat.cs" />
     <Compile Include="Assets\Scripts\Segment\ISegment.cs" />
     <Compile Include="Assets\Testing\TestScripts\SingleScriptableInSceneTest.cs" />
+    <Compile Include="Assets\Testing\TestScripts\SingleScriptableObjectTest2.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">

@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEditor;
 
-[CustomEditor(typeof(SingleScriptableObject))]
+[CustomEditor(typeof(SingleScriptableObject), true)]
 public class SingleScriptableObjectInspector : Editor
 {
     private SingleScriptableObject targetSSO;
@@ -34,7 +34,7 @@ public class SingleScriptableObjectInspector : Editor
 
     private void SetDirtyAll()
     {
-        SingleScriptableObject[] all = SingleScriptableObject.FindAll();
+        SingleScriptableObject[] all = SingleScriptableObject.FindAll(targetSSO.GetType());
         if (all != null) foreach (SingleScriptableObject o in all) EditorUtility.SetDirty(o);
     }
 }

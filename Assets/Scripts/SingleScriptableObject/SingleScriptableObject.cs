@@ -1,38 +1,42 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "SingleScriptable")]
-public class SingleScriptableObject : ScriptableObject
+public abstract class SingleScriptableObject : ScriptableObject
 {
     #region STATIC
-    static private SingleScriptableObject _current;
+    //static private SingleScriptableObject _current;
+    protected abstract SingleScriptableObject CurrentAbstract { get; set; }
 
-    static public SingleScriptableObject Current 
-    { 
-        get
-        {
-            if (_current == null) _current = FindCurrent();
-            return _current;
-        }
-        set
-        {
-            ClearCurrent();
-            _current = value;
-            if (_current) _current.isCurrent = true;
-        }
+    static private Dictionary<Type, SingleScriptableObject> _currentBase;
+
+    static public T GetCurrent<T>() where T : SingleScriptableObject
+    {
+        Type objectType = typeof(T);
+        if (_currentBase == null) _currentBase = new Dictionary<Type, SingleScriptableObject>();
+        if (_currentBase.ContainsKey(objectType) == false) _currentBase.Add(objectType, FindCurrent(objectType));
+        return _currentBase[objectType] as T;
     }
 
-    static public SingleScriptableObject[] FindAll()
+    static public void SetCurrent<T>(T value) where T : SingleScriptableObject
     {
-        Resources.LoadAll("", typeof(SingleScriptableObject));
-        SingleScriptableObject[] all = Resources.FindObjectsOfTypeAll<SingleScriptableObject>();
+        if (_currentBase == null) _currentBase = new Dictionary<Type, SingleScriptableObject>();
+        Type objectType = typeof(T);
+        if (_currentBase.ContainsKey(objectType) == false) _currentBase.Add(objectType, value);
+        else _currentBase[objectType] = value;
+    }
+
+    static public SingleScriptableObject[] FindAll(Type objectType)
+    {
+        Resources.LoadAll("", objectType);
+        SingleScriptableObject[] all = Resources.FindObjectsOfTypeAll(objectType) as SingleScriptableObject[];
         Resources.UnloadUnusedAssets();
         return all;
-    } 
+    }
 
-    static private SingleScriptableObject FindCurrent()
+    static public SingleScriptableObject FindCurrent(Type objectType)
     {
-        SingleScriptableObject[] all = FindAll();
+        SingleScriptableObject[] all = FindAll(objectType);
         if (all == null) return null;
         SingleScriptableObject[] allCurrents = Array.FindAll(all, o => o.isCurrent);
         if (allCurrents == null || allCurrents.Length == 0) return null;
@@ -40,17 +44,15 @@ public class SingleScriptableObject : ScriptableObject
         return allCurrents[0];
     }
 
-    static private void ClearCurrent()
+    static public void ClearCurrent(Type objectType)
     {
-        Debug.Log("ClearCurrent:");
-        SingleScriptableObject[] all = FindAll();
+        SingleScriptableObject[] all = FindAll(objectType);
         if (all == null || all.Length == 0) return;
         foreach (SingleScriptableObject o in all)
         {
-            Debug.Log(" - " + o);
             o.isCurrent = false;
+            o.CurrentAbstract = null;
         }
-        _current = null;
     }
     #endregion
 
@@ -59,14 +61,29 @@ public class SingleScriptableObject : ScriptableObject
 
     public bool IsCurrent
     {
-        get => isCurrent && _current == this;
+        get => isCurrent && CurrentAbstract == this;
         set
         {
-            if (value == true) Current = this;
-            else if (Current == this) Current = null;
+            if (value == true) SetCurrent(this);
+            else if (GetCurrent() == this) SetCurrent(null);
         }
     }
 
-    public SingleScriptableObject GetCurrent() => Current;
+    public SingleScriptableObject GetCurrent()
+    {
+        Type objectType = GetType();
+        if (CurrentAbstract == null) CurrentAbstract = FindCurrent(objectType);
+        return CurrentAbstract;
+    }
+
+    public void SetCurrent(SingleScriptableObject value)
+    {
+        Type objectType = GetType();
+        ClearCurrent(objectType);
+        CurrentAbstract = value;
+        if (CurrentAbstract) CurrentAbstract.isCurrent = true;
+    }
+
+    //public SingleScriptableObject GetCurrent() => Current;
     #endregion
 }

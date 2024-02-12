@@ -3,10 +3,12 @@ using UnityEngine;
 [ExecuteAlways]
 public class SingleScriptableInSceneTest : MonoBehaviour
 {
-    public string current;
+    public string currentData1;
+    public string currentData2;
 
     private void Update()
     {
-        current = SingleScriptableObject.Current ? SingleScriptableObject.Current.name : "null";
+        SingleScriptableObjectTest1 current1 = SingleScriptableObject.GetCurrent<SingleScriptableObjectTest1>();
+        currentData1 = current1 != null ? current1.someData : "NO CURRENT";
     }
 }
