@@ -57,6 +57,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Scripts\SingleScriptableObject\Editor\SingleScriptableObjectInspector.cs" />
+    <Compile Include="Assets\Scripts\CurrentAssetManager\Editor\CurrentToggleDrawer.cs" />
     <Compile Include="Assets\Scripts\Segment\Editor\SegmentPropertyDrawers.cs" />
   </ItemGroup>
   <ItemGroup>
