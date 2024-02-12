@@ -13,6 +13,8 @@ public class CurrentAssetsManager : ScriptableObject
         return _instance.current.Find(o => TypeMatch(o, objectType));
     }
 
+    static public T GetCurrent<T>() where T : UnityEngine.Object => GetCurrent(typeof(T)) as T;
+
     static public void SetCurrent(UnityEngine.Object c)
     {
         SetSingleInstance();

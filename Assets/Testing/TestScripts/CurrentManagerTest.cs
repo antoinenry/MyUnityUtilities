@@ -11,6 +11,6 @@ public class CurrentManagerTest : MonoBehaviour
         if (setCurrent)
             CurrentAssetsManager.SetCurrent(currentMaterial);
         else
-            currentMaterial = CurrentAssetsManager.GetCurrent(typeof(Material)) as Material;
+            currentMaterial = CurrentAssetsManager.GetCurrent<Material>();
     }
 }
