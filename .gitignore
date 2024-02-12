@@ -363,5 +363,5 @@ MigrationBackup/
 FodyWeavers.xsd
 
 # Local Unity generated folders
-/UnityUtilities/Library/
-/UnityUtilities/Temp/
+/Library/
+/Temp/
