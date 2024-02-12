@@ -8,7 +8,8 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>10.0.20506</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <RootNamespace></RootNamespace>
+    <RootNamespace>
+    </RootNamespace>
     <ProjectGuid>{2302A1C8-DF09-58DF-6678-E034B82E7883}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
@@ -62,7 +63,7 @@
     <Compile Include="Assets\Scripts\Segment\SegmentInt.cs" />
     <Compile Include="Assets\Testing\TestScripts\SegmentUtilityTest.cs" />
     <Compile Include="Assets\Testing\TestScripts\SingleScriptableObjectTest1.cs" />
-    <Compile Include="Assets\Scripts\SingleResourceManager\CurrentAssetsManager.cs" />
+    <Compile Include="Assets\Scripts\CurrentAssetManager\CurrentAssetsManager.cs" />
     <Compile Include="Assets\Scripts\Segment\SegmentFloat.cs" />
     <Compile Include="Assets\Scripts\Segment\ISegment.cs" />
     <Compile Include="Assets\Testing\TestScripts\SingleScriptableInSceneTest.cs" />
