@@ -1,3 +1,11 @@
+# Object Method Caller
+- Add this class to any Unity Object to show buttons in its inspector, triggering some of this object's methods
+- Which methods are available can be changed in the Debug view of the inspector
+
+Notes:
+- I could improve the PropertyDrawer of this class so the user can choose the available methods without swithing to Debug.
+- Available buttons are specific to each instance of the object, but an easy way to have default buttons is to set a default value for the ObjectMethodCaller field, using the constructor with method names as arguments.
+
 # Current Asset Manager
 - Basically my personal workaround for something that behaves like a "Singleton ScriptableObject"
 - Manages a list of Unity Objects that user would want to mark as "Current" (no more than one object of the same type)
